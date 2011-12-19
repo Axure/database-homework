@@ -1,8 +1,8 @@
 import wx
-from noname import *
+from interface import *
 
 app = wx.App()
-win = loginFrame(None)
+win = login_frame(None)
 
 if __name__ == '__main__':
     win.Show()
