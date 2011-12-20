@@ -1,9 +1,13 @@
-import wx
-from interface import *
+#-*- encoding: utf-8 -*-
 
-app = wx.App()
-win = login_frame(None)
-
-if __name__ == '__main__':
-    win.Show()
-    app.MainLoop()
+import wx, sys
+from database import *
+from noname import *
+from PM_APP import *
+class PM_App(wx.App):
+     def OnInit(self):
+         self.LoginFrame = login_frame(None)
+         self.LoginFrame.Show()
+         self.SetTopWindow(self.LoginFrame)
+         self.LoginFrame.confirm.Bind(wx.EVT_BUTTON, check);
+         return True
