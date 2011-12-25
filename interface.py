@@ -16,7 +16,7 @@ import wx
 class login_frame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"login", pos = wx.DefaultPosition, size = wx.Size( 280,180 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"login", pos = wx.Point( 500,250 ), size = wx.Size( 280,180 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		
@@ -31,21 +31,21 @@ class login_frame ( wx.Frame ):
 		self.m_staticText1.Wrap( -1 )
 		fgSizer3.Add( self.m_staticText1, 1, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.user = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer3.Add( self.user, 0, wx.ALL|wx.EXPAND, 5 )
+		self.user_text = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer3.Add( self.user_text, 0, wx.ALL|wx.EXPAND, 5 )
 		
 		self.m_staticText3 = wx.StaticText( self, wx.ID_ANY, u"password", wx.DefaultPosition, wx.Size( 80,-1 ), 0 )
 		self.m_staticText3.Wrap( -1 )
 		fgSizer3.Add( self.m_staticText3, 0, wx.ALL|wx.ALIGN_RIGHT|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.passwd = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 150,-1 ), 0 )
-		fgSizer3.Add( self.passwd, 0, wx.ALL|wx.EXPAND, 5 )
+		self.passwd_text = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 150,-1 ), wx.TE_PASSWORD )
+		fgSizer3.Add( self.passwd_text, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.confirm = wx.Button( self, wx.ID_ANY, u"confirm", wx.Point( -1,-1 ), wx.Size( -1,40 ), 0 )
-		fgSizer3.Add( self.confirm, 0, wx.ALL, 5 )
+		self.confirm_button = wx.Button( self, wx.ID_ANY, u"confirm", wx.Point( -1,-1 ), wx.Size( -1,40 ), 0 )
+		fgSizer3.Add( self.confirm_button, 0, wx.ALL, 5 )
 		
-		self.cancel = wx.Button( self, wx.ID_ANY, u"cancel", wx.DefaultPosition, wx.Size( -1,40 ), 0 )
-		fgSizer3.Add( self.cancel, 0, wx.ALL|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		self.cancel_button = wx.Button( self, wx.ID_ANY, u"cancel", wx.DefaultPosition, wx.Size( -1,40 ), 0 )
+		fgSizer3.Add( self.cancel_button, 0, wx.ALL|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		self.SetSizer( fgSizer3 )
 		self.Layout()

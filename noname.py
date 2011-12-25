@@ -10,13 +10,13 @@
 import wx
 
 ###########################################################################
-## Class login_frame
+## Class login_dialog
 ###########################################################################
 
-class login_frame ( wx.Frame ):
+class login_dialog ( wx.Dialog ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"login", pos = wx.Point( 500,250 ), size = wx.Size( 280,180 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = u"登陆", pos = wx.Point( 800,300 ), size = wx.Size( 280,200 ), style = wx.DEFAULT_DIALOG_STYLE )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		
@@ -41,14 +41,16 @@ class login_frame ( wx.Frame ):
 		self.passwd_text = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 150,-1 ), wx.TE_PASSWORD )
 		fgSizer3.Add( self.passwd_text, 0, wx.ALL|wx.EXPAND, 5 )
 		
-		self.confirm_button = wx.Button( self, wx.ID_ANY, u"confirm", wx.Point( -1,-1 ), wx.Size( -1,40 ), 0 )
+		self.confirm_button = wx.Button( self, wx.ID_OK, u"confirm", wx.Point( -1,-1 ), wx.Size( -1,40 ), 0 )
 		fgSizer3.Add( self.confirm_button, 0, wx.ALL, 5 )
 		
-		self.cancel_button = wx.Button( self, wx.ID_ANY, u"cancel", wx.DefaultPosition, wx.Size( -1,40 ), 0 )
+		self.cancel_button = wx.Button( self, wx.ID_CANCEL, u"cancel", wx.DefaultPosition, wx.Size( -1,40 ), 0 )
 		fgSizer3.Add( self.cancel_button, 0, wx.ALL|wx.ALIGN_BOTTOM|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		self.SetSizer( fgSizer3 )
 		self.Layout()
+		
+		self.Centre( wx.BOTH )
 	
 	def __del__( self ):
 		pass
@@ -64,15 +66,6 @@ class PersonnelManagement_frame ( wx.Frame ):
 		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"PersonnelManagement", pos = wx.DefaultPosition, size = wx.Size( 640,480 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
-		
-		self.m_toolBar1 = self.CreateToolBar( wx.TB_HORIZONTAL, wx.ID_ANY ) 
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.AddSeparator()
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"account_salary", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.AddSeparator()
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"exit", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.Realize() 
 		
 		self.menu = wx.MenuBar( 0 )
 		self.mana_depa_menu = wx.Menu()
@@ -126,6 +119,17 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.SetMenuBar( self.menu )
 		
 		bSizer1 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.m_toolBar1 = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
+		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
+		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
+		self.m_toolBar1.AddSeparator()
+		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"account_salary", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
+		self.m_toolBar1.AddSeparator()
+		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"exit", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
+		self.m_toolBar1.Realize() 
+		
+		bSizer1.Add( self.m_toolBar1, 0, wx.EXPAND, 5 )
 		
 		self.welcome = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer1.Add( self.welcome, 1, wx.EXPAND |wx.ALL, 5 )
