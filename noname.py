@@ -141,6 +141,7 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.Bind( wx.EVT_MENU, self.open_add_depa, id = self.add_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.open_modify_depa, id = self.modify_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.open_del_depa, id = self.del_depa_item.GetId() )
+		self.Bind( wx.EVT_MENU, self.onExit, id = self.exit_item.GetId() )
 	
 	def __del__( self ):
 		pass
@@ -154,6 +155,9 @@ class PersonnelManagement_frame ( wx.Frame ):
 		event.Skip()
 	
 	def open_del_depa( self, event ):
+		event.Skip()
+	
+	def onExit( self, event ):
 		event.Skip()
 	
 

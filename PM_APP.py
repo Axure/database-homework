@@ -24,7 +24,6 @@ if __name__ == '__main__':
             login.Destroy()
             app.Destroy()
             sys.exit()
-
     if x == True:
         app.PM_Frame.Show()
     else:
