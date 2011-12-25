@@ -136,9 +136,25 @@ class PersonnelManagement_frame ( wx.Frame ):
 		
 		self.SetSizer( bSizer1 )
 		self.Layout()
+		
+		# Connect Events
+		self.Bind( wx.EVT_MENU, self.open_add_depa, id = self.add_depa_item.GetId() )
+		self.Bind( wx.EVT_MENU, self.open_modify_depa, id = self.modify_depa_item.GetId() )
+		self.Bind( wx.EVT_MENU, self.open_del_depa, id = self.del_depa_item.GetId() )
 	
 	def __del__( self ):
 		pass
+	
+	
+	# Virtual event handlers, overide them in your derived class
+	def open_add_depa( self, event ):
+		event.Skip()
+	
+	def open_modify_depa( self, event ):
+		event.Skip()
+	
+	def open_del_depa( self, event ):
+		event.Skip()
 	
 
 ###########################################################################
