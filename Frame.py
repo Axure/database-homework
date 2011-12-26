@@ -17,13 +17,17 @@ class login_dialog(noname.login_dialog):
             return False
     
 class PM_frame(noname.PersonnelManagement_frame):
-    # 管理部门
+    # 管理部门视图
     def open_add_depa(self, event):
-        pass
+        self.welcome_panel.Hide()
+        self.add_depa_panel.Show()
+
     def open_del_depa(self, event):
         pass
     def open_modify_depa(self, event):
         pass
+
+
     # 系统设置
     def onExit(self, event):
         self.Close()

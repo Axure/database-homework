@@ -118,23 +118,44 @@ class PersonnelManagement_frame ( wx.Frame ):
 		
 		self.SetMenuBar( self.menu )
 		
-		bSizer1 = wx.BoxSizer( wx.VERTICAL )
+		bSizer6 = wx.BoxSizer( wx.HORIZONTAL )
 		
-		self.m_toolBar1 = wx.ToolBar( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TB_HORIZONTAL ) 
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"tool", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.AddSeparator()
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"account_salary", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.AddSeparator()
-		self.m_toolBar1.AddLabelTool( wx.ID_ANY, u"exit", wx.NullBitmap, wx.NullBitmap, wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
-		self.m_toolBar1.Realize() 
+		self.welcome_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.welcome_panel.Hide()
 		
-		bSizer1.Add( self.m_toolBar1, 0, wx.EXPAND, 5 )
+		bSizer7 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.welcome = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		bSizer1.Add( self.welcome, 1, wx.EXPAND |wx.ALL, 5 )
+		self.m_staticText18 = wx.StaticText( self.welcome_panel, wx.ID_ANY, u"welcome", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText18.Wrap( -1 )
+		bSizer7.Add( self.m_staticText18, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
-		self.SetSizer( bSizer1 )
+		self.welcome_panel.SetSizer( bSizer7 )
+		self.welcome_panel.Layout()
+		bSizer7.Fit( self.welcome_panel )
+		bSizer6.Add( self.welcome_panel, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.add_depa_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		gSizer1 = wx.GridSizer( 2, 2, 20, 0 )
+		
+		self.m_staticText16 = wx.StaticText( self.add_depa_panel, wx.ID_ANY, u"部门名", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText16.Wrap( -1 )
+		gSizer1.Add( self.m_staticText16, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.name_depa_entry = wx.TextCtrl( self.add_depa_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
+		gSizer1.Add( self.name_depa_entry, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.submit_button = wx.Button( self.add_depa_panel, wx.ID_ANY, u"确定", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer1.Add( self.submit_button, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.cancel_button = wx.Button( self.add_depa_panel, wx.ID_ANY, u"取消", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer1.Add( self.cancel_button, 0, wx.ALL, 5 )
+		
+		self.add_depa_panel.SetSizer( gSizer1 )
+		self.add_depa_panel.Layout()
+		gSizer1.Fit( self.add_depa_panel )
+		bSizer6.Add( self.add_depa_panel, 1, wx.ALIGN_RIGHT|wx.TOP|wx.BOTTOM|wx.LEFT|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.SetSizer( bSizer6 )
 		self.Layout()
 		
 		# Connect Events
@@ -142,6 +163,8 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.Bind( wx.EVT_MENU, self.open_modify_depa, id = self.modify_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.open_del_depa, id = self.del_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.onExit, id = self.exit_item.GetId() )
+		self.submit_button.Bind( wx.EVT_BUTTON, self.confirm_add_depa )
+		self.cancel_button.Bind( wx.EVT_BUTTON, self.cancel_add_depa )
 	
 	def __del__( self ):
 		pass
@@ -160,37 +183,11 @@ class PersonnelManagement_frame ( wx.Frame ):
 	def onExit( self, event ):
 		event.Skip()
 	
-
-###########################################################################
-## Class add_depa_panel
-###########################################################################
-
-class add_depa_panel ( wx.Panel ):
+	def confirm_add_depa( self, event ):
+		event.Skip()
 	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
-		gSizer1 = wx.GridSizer( 2, 2, 20, 0 )
-		
-		gSizer1.SetMinSize( wx.Size( 20,20 ) ) 
-		self.depa_name = wx.StaticText( self, wx.ID_ANY, u"部门名", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.depa_name.Wrap( -1 )
-		gSizer1.Add( self.depa_name, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
-		
-		self.name_depa_entry = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 200,-1 ), 0 )
-		gSizer1.Add( self.name_depa_entry, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
-		
-		self.submit_button = wx.Button( self, wx.ID_ANY, u"确定", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer1.Add( self.submit_button, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
-		
-		self.cancel_button = wx.Button( self, wx.ID_ANY, u"取消", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer1.Add( self.cancel_button, 0, wx.ALL, 5 )
-		
-		self.SetSizer( gSizer1 )
-		self.Layout()
-	
-	def __del__( self ):
-		pass
+	def cancel_add_depa( self, event ):
+		event.Skip()
 	
 
 ###########################################################################
@@ -330,20 +327,6 @@ class account_salary_panel ( wx.Panel ):
 ###########################################################################
 
 class user_passwd_panel ( wx.Panel ):
-	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
-	
-	def __del__( self ):
-		pass
-	
-
-###########################################################################
-## Class MyPanel11
-###########################################################################
-
-class MyPanel11 ( wx.Panel ):
 	
 	def __init__( self, parent ):
 		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
