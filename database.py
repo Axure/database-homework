@@ -13,7 +13,8 @@ import MySQLdb
 def get_conn():
     global conn
     try:
-        conn = MySQLdb.connect(host='localhost', user='root', passwd='marui555', db='PM')
+        #连接时注意字符集为charset='utf8'
+        conn = MySQLdb.Connection(host='localhost', user='root', passwd='marui555', db='PM', charset='utf8')
     except Except,e:
         print e;
         sys.exit()
@@ -35,6 +36,56 @@ def check_user(name, passwd):
     else:
         return True
 
+#管理部门
+def add_depa(Dname):
+    get_conn()
+    cursor = conn.cursor()
+    sql = "insert into Department(Dname) values ('%s')" % Dname
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def del_depa(Did):
+    get_conn()
+    cursor = conn.cursor()
+    sql = "delete from Department where Did = '%s';" % Did
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def get_all_depa():
+    get_conn()
+    cursor = conn.cursor()
+    sql = "select * from Department"
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return dict(data)
+
+def get_depa(Did):
+    get_conn()
+    cursor = conn.cursor()
+    sql = "select * from Department where Did='%s'"%Did
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    print data
+    cursor.close()
+    conn.close()
+    return dict(data)
+    
+def update_depa(Did, Dname):
+    get_conn()
+    cursor = conn.cursor()
+    print Dname, Did
+    sql = "update Department set Dname='%s' where Did='%s'"%(Dname,Did)
+    cursor.execute(sql)
+    cursor.close()
+    conn.close()
+
+#管理人员
 def add_person():
     pass
 def del_person():
@@ -55,5 +106,3 @@ def add_fine():
     pass
 def account_salary():
     pass
-def kk():
-    print "dd"

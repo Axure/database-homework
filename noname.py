@@ -75,17 +75,11 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.modify_depa_item = wx.MenuItem( self.mana_depa_menu, wx.ID_ANY, u"修改部门", wx.EmptyString, wx.ITEM_NORMAL )
 		self.mana_depa_menu.AppendItem( self.modify_depa_item )
 		
-		self.del_depa_item = wx.MenuItem( self.mana_depa_menu, wx.ID_ANY, u"删除部门", wx.EmptyString, wx.ITEM_NORMAL )
-		self.mana_depa_menu.AppendItem( self.del_depa_item )
-		
 		self.menu.Append( self.mana_depa_menu, u"管理部门" ) 
 		
 		self.mana_personnel_menu = wx.Menu()
 		self.add_person_item = wx.MenuItem( self.mana_personnel_menu, wx.ID_ANY, u"添加人员", wx.EmptyString, wx.ITEM_NORMAL )
 		self.mana_personnel_menu.AppendItem( self.add_person_item )
-		
-		self.search_person_item = wx.MenuItem( self.mana_personnel_menu, wx.ID_ANY, u"查看人员", wx.EmptyString, wx.ITEM_NORMAL )
-		self.mana_personnel_menu.AppendItem( self.search_person_item )
 		
 		self.modify_person_item = wx.MenuItem( self.mana_personnel_menu, wx.ID_ANY, u"修改人员", wx.EmptyString, wx.ITEM_NORMAL )
 		self.mana_personnel_menu.AppendItem( self.modify_person_item )
@@ -135,6 +129,8 @@ class PersonnelManagement_frame ( wx.Frame ):
 		bSizer6.Add( self.welcome_panel, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		self.add_depa_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.add_depa_panel.Hide()
+		
 		gSizer1 = wx.GridSizer( 2, 2, 20, 0 )
 		
 		self.m_staticText16 = wx.StaticText( self.add_depa_panel, wx.ID_ANY, u"部门名", wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -155,16 +151,51 @@ class PersonnelManagement_frame ( wx.Frame ):
 		gSizer1.Fit( self.add_depa_panel )
 		bSizer6.Add( self.add_depa_panel, 1, wx.ALIGN_RIGHT|wx.TOP|wx.BOTTOM|wx.LEFT|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
+		self.modify_depa_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		gSizer4 = wx.GridSizer( 2, 2, 0, 0 )
+		
+		list_depaChoices = []
+		self.list_depa = wx.ListBox( self.modify_depa_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, list_depaChoices, wx.LB_SINGLE )
+		gSizer4.Add( self.list_depa, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		gSizer5 = wx.GridSizer( 2, 2, 0, 0 )
+		
+		self.name = wx.StaticText( self.modify_depa_panel, wx.ID_ANY, u"部门名", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.name.Wrap( -1 )
+		gSizer5.Add( self.name, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.depa_name_entry = wx.TextCtrl( self.modify_depa_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.depa_name_entry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
+		
+		self.confirm_modify_depa_button = wx.Button( self.modify_depa_panel, wx.ID_ANY, u"修改", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.confirm_modify_depa_button, 0, wx.ALL, 5 )
+		
+		self.cancel_modify_depa_button = wx.Button( self.modify_depa_panel, wx.ID_ANY, u"取消", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.cancel_modify_depa_button, 0, wx.ALL, 5 )
+		
+		self.del_depa_button = wx.Button( self.modify_depa_panel, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer5.Add( self.del_depa_button, 0, wx.ALL, 5 )
+		
+		gSizer4.Add( gSizer5, 1, wx.EXPAND, 5 )
+		
+		self.modify_depa_panel.SetSizer( gSizer4 )
+		self.modify_depa_panel.Layout()
+		gSizer4.Fit( self.modify_depa_panel )
+		bSizer6.Add( self.modify_depa_panel, 1, wx.EXPAND |wx.ALL, 5 )
+		
 		self.SetSizer( bSizer6 )
 		self.Layout()
 		
 		# Connect Events
 		self.Bind( wx.EVT_MENU, self.open_add_depa, id = self.add_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.open_modify_depa, id = self.modify_depa_item.GetId() )
-		self.Bind( wx.EVT_MENU, self.open_del_depa, id = self.del_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.onExit, id = self.exit_item.GetId() )
 		self.submit_button.Bind( wx.EVT_BUTTON, self.confirm_add_depa )
 		self.cancel_button.Bind( wx.EVT_BUTTON, self.cancel_add_depa )
+		self.list_depa.Bind( wx.EVT_LISTBOX_DCLICK, self.select_depa )
+		self.confirm_modify_depa_button.Bind( wx.EVT_BUTTON, self.confirm_modify_depa )
+		self.cancel_modify_depa_button.Bind( wx.EVT_BUTTON, self.cancel_modify_depa )
+		self.del_depa_button.Bind( wx.EVT_BUTTON, self.confirm_del_depa )
 	
 	def __del__( self ):
 		pass
@@ -177,9 +208,6 @@ class PersonnelManagement_frame ( wx.Frame ):
 	def open_modify_depa( self, event ):
 		event.Skip()
 	
-	def open_del_depa( self, event ):
-		event.Skip()
-	
 	def onExit( self, event ):
 		event.Skip()
 	
@@ -189,81 +217,17 @@ class PersonnelManagement_frame ( wx.Frame ):
 	def cancel_add_depa( self, event ):
 		event.Skip()
 	
-
-###########################################################################
-## Class del_depa_panel
-###########################################################################
-
-class del_depa_panel ( wx.Panel ):
+	def select_depa( self, event ):
+		event.Skip()
 	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
-		gSizer4 = wx.GridSizer( 2, 1, 0, 0 )
-		
-		self.list_depa = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.LC_ICON )
-		gSizer4.Add( self.list_depa, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
-		
-		self.del_button = wx.Button( self, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer4.Add( self.del_button, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
-		
-		self.SetSizer( gSizer4 )
-		self.Layout()
+	def confirm_modify_depa( self, event ):
+		event.Skip()
 	
-	def __del__( self ):
-		pass
+	def cancel_modify_depa( self, event ):
+		event.Skip()
 	
-
-###########################################################################
-## Class modify_depa_panel
-###########################################################################
-
-class modify_depa_panel ( wx.Panel ):
-	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
-		gSizer4 = wx.GridSizer( 2, 2, 0, 0 )
-		
-		self.list_depa = wx.ListCtrl( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 80,-1 ), wx.LC_ICON )
-		gSizer4.Add( self.list_depa, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
-		
-		gSizer5 = wx.GridSizer( 2, 2, 0, 0 )
-		
-		self.name = wx.StaticText( self, wx.ID_ANY, u"部门名", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.name.Wrap( -1 )
-		gSizer5.Add( self.name, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
-		
-		self.depa_name_entry = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.depa_name_entry, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5 )
-		
-		self.submit_button = wx.Button( self, wx.ID_ANY, u"修改", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.submit_button, 0, wx.ALL, 5 )
-		
-		self.cancel_button = wx.Button( self, wx.ID_ANY, u"取消", wx.DefaultPosition, wx.DefaultSize, 0 )
-		gSizer5.Add( self.cancel_button, 0, wx.ALL, 5 )
-		
-		gSizer4.Add( gSizer5, 1, wx.EXPAND, 5 )
-		
-		self.SetSizer( gSizer4 )
-		self.Layout()
-	
-	def __del__( self ):
-		pass
-	
-
-###########################################################################
-## Class add_person_panel
-###########################################################################
-
-class add_person_panel ( wx.Panel ):
-	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
-	
-	def __del__( self ):
-		pass
+	def confirm_del_depa( self, event ):
+		event.Skip()
 	
 
 ###########################################################################
