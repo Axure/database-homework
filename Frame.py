@@ -95,7 +95,9 @@ class PM_frame(noname.PersonnelManagement_frame):
     def open_add_person(self, event):
         pass
 
-
+    def open_modify_person(self, event):
+        pass
+    
     #管理人员事件
 
 
