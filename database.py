@@ -8,6 +8,7 @@
 
 import os, sys, string                  
 import MySQLdb                          
+from person_model import *
 
 #初始化数据库连接
 def get_conn():
@@ -86,8 +87,10 @@ def update_depa(Did, Dname):
     conn.close()
 
 #管理人员
-def add_person():
-    pass
+def add_person(person):
+    for kk in person:
+        print kk, person[kk]
+
 def del_person():
     pass
 def modify_person():

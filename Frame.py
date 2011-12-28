@@ -2,6 +2,7 @@
 
 import wx, sys, noname
 from database import *
+# from person_model import *              
 reload(sys) 
 sys.setdefaultencoding('utf8')
 
@@ -24,20 +25,13 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.welcome_panel.Hide()
         self.add_depa_panel.Show()
         self.modify_depa_panel.Hide()
-
+        self.add_person_panel.Hide()
         
-    def open_del_depa(self, event):
-        self.welcome_panel.Hide()
-        self.add_depa_panel.Hide()
-        self.modify_depa_panel.Hide()
-        
-        pass
-
     def open_modify_depa(self, event):
         self.welcome_panel.Hide()
         self.add_depa_panel.Hide()
         self.modify_depa_panel.Show()
-        
+        self.add_person_panel.Hide()        
         depa = get_all_depa()
         self.list_depa.Clear()
         for kk in depa:
@@ -93,16 +87,81 @@ class PM_frame(noname.PersonnelManagement_frame):
 
     #管理人员视图
     def open_add_person(self, event):
-        pass
-
+        self.welcome_panel.Hide()
+        self.add_depa_panel.Hide()
+        self.modify_depa_panel.Hide()
+        self.add_person_panel.Show()
+        depa = get_all_depa()
+        self.select_depa_add_person.Clear()
+        for kk in depa:
+            self.select_depa_add_person.Append(depa[kk]+u'   '+str(kk))
+            print depa[kk]+"    "+str(kk)
+        self.select_depa_add_person.Refresh()
+    
     def open_modify_person(self, event):
         pass
     
-    #管理人员事件
+    # 管理人员事件
+    # 添加人员
+    def select_person_depa(self, event):
+        global Did
+        data = self.select_depa_add_person.GetStringSelection()
+        data = data.split("   ")
+        self.person_depa_entry.SetValue(data[0])
+        Did = data[1]
+        print data
+
+    def confirm_add_person(self, event):
+        person = {}
+        flag = True
+        person['name'] = self.person_name_entry.GetValue()
+        person['sex'] = self.person_sex_choice.GetValue()
+        person['depa'] = self.person_depa_entry.GetValue()
+        person['salary'] = self.person_salary_entry.GetValue()
+        person['work'] = self.person_work_entry.GetValue()
+        person['dismiss'] = self.isDismiss_choice.GetValue()
+        for ss in person:
+            if ss == 'salary':
+                try:                    # 是否可以转换为float型，异常
+                    person[ss] = round(float(person[ss]), 2)
+                except ValueError, e:
+                    wx.MessageBox("%s数值错误"% ss,style=wx.OK)
+                    flag = False
+
+            if person[ss] == "" :
+                wx.MessageBox("%s不能为空"% ss,style=wx.OK)
+                flag = False
+                break
+        if flag == True:
+            add_person(person)
+            wx.MessageBox("添加成功  %s"% person['name'],style=wx.OK)
+            self.person_name_entry.SetValue("")
+            self.person_sex_choice.SetValue("")
+            self.person_depa_entry.SetValue("")
+            self.person_salary_entry.SetValue("")
+            self.person_work_entry.SetValue("")
+            self.isDismiss_choice.SetValue("")
+
+    def cancel_add_person(self, event):
+        self.person_name_entry.SetValue("")
+        self.person_sex_choice.SetValue("")
+        self.person_depa_entry.SetValue("")
+        self.person_salary_entry.SetValue("")
+        self.person_work_entry.SetValue("")
+        self.isDismiss_choice.SetValue("")
 
 
-
+    # 修改人员
     
+
+
+    # 工资管理视图                        
+
+
+    # 工资管理事件
+    
+
+
     # 系统设置
     def onExit(self, event):
         self.Close()
