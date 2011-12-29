@@ -99,12 +99,12 @@ def get_all_person():
     data = list(data)
     for ss in data:
         depa_name = get_depa(ss[3])[ss[3]]
-        temp_dict = {'Pid':ss[0],'Pname':ss[1],'Psex':ss[2],'Ddepa':ss[3],'Psalary':ss[4],'Pdismiss':ss[5], 'Dname':depa_name}
+        temp_dict = {'Pid':ss[0],'Pname':ss[1],'Psex':ss[2],'Ddepa':ss[3],'Psalary':ss[4], 'Pwork':ss[5],'Pdismiss':ss[6], 'Dname':depa_name}
         person.append(temp_dict)
         # print get_depa(ss[3])[ss[3]]
     cursor.close()
     return person
-    
+
 # 添加人员
 def add_person(person):
     get_conn()
@@ -118,10 +118,24 @@ def add_person(person):
     cursor.close()
     conn.close()   
 
-def del_person():
-    pass
-def modify_person():
-    pass
+def del_person(Pid):
+    get_conn()
+    cursor = conn.cursor()
+    sql = "delete from Person where Pid = '%s';" % Pid
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()   
+
+def update_person(person):
+    get_conn()
+    cursor = conn.cursor()
+    sql = "update Person set Pname='%s', Psex='%s', Pdepa='%s', Psalary='%s', Pwork='%s', Pdismiss='%s' where Pid='%s'"%(person['Pname'], person['Psex'], person['Pdepa'], person['Psalary'], person['Pwork'], person['Pdismiss'], person['Pid'])
+    print sql 
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 def get_ppperson():
     pass

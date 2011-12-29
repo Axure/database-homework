@@ -23,7 +23,8 @@ class PM_frame(noname.PersonnelManagement_frame):
     def OnInit(self):
         self.MDid = None
         self.PDid = None
-        
+        self.persons = None
+
     # 管理部门视图
     def open_add_depa(self, event):
         self.welcome_panel.Hide()
@@ -113,20 +114,24 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.modify_depa_panel.Hide()
         self.add_person_panel.Hide()
         self.modify_person_panel.Show()
+        self.refresh_grid()
+        
+    def refresh_grid(self):
+        self.persons = get_all_person()
+        num_rows = self.modify_person_grid.GetNumberRows()
+        # 防止添加新行
+        if num_rows < len(self.persons):
+            self.modify_person_grid.AppendRows(len(self.persons)-num_rows)
+            rows = self.modify_person_grid.GetNumberRows()
+            for kk in range(0, rows):
+                self.modify_person_grid.SetCellValue(kk,0, str( self.persons[kk]['Pid'] ))
+                self.modify_person_grid.SetCellValue(kk,1, self.persons[kk]['Pname'])
+                self.modify_person_grid.SetCellValue(kk,2, self.persons[kk]['Psex'])
+                self.modify_person_grid.SetCellValue(kk,3, self.persons[kk]['Dname'])    
+        else:
+            sel_row = self.modify_person_grid.GetGridCursorRow()
+            self.modify_person_grid.DeleteRows(sel_row)
 
-
-        person = get_all_person()
-        self.modify_person_grid.AppendRows(len(person)-1)
-        print type(self.modify_person_grid)
-        rows = self.modify_person_grid.GetNumberRows()
-
-        for kk in range(0, rows):
-            self.modify_person_grid.SetCellValue(kk,0, str( person[kk]['Pid'] ))
-            self.modify_person_grid.SetCellValue(kk,1, person[kk]['Pname'])
-            self.modify_person_grid.SetCellValue(kk,2, person[kk]['Psex'])
-            self.modify_person_grid.SetCellValue(kk,3, person[kk]['Dname'])    
-        pass
-    
     # 管理人员事件
     # 添加人员
     def select_person_depa(self, event):
@@ -179,17 +184,74 @@ class PM_frame(noname.PersonnelManagement_frame):
 
 
     # 修改人员
+    def get_select_person(self, event):
+        row = self.modify_person_grid.GetGridCursorRow()
+        Pid = int(self.modify_person_grid.GetCellValue(row, 0)) - 1
+        person = self.persons[row]
+        self.modify_person_name_entry.SetValue(person['Pname'])
+        self.modify_person_sex_choice.Clear()
+        self.modify_person_sex_choice.AppendItems(["男","女"])
+        self.modify_person_sex_choice.Select(person['Psex']!='男')
+        depa = get_all_depa()
+        depa_list = []
+        for ss in depa:
+            depa_list.append(str(depa[ss])+'   '+str(ss))
+        print depa_list
+        # 取出部门并显示
+        self.modify_person_depa_choice.Clear()
+        self.modify_person_depa_choice.AppendItems(depa_list)
+        choice_depa = "%s   %d"%(person['Dname'], person['Ddepa'])
+        self.modify_person_depa_choice.Select(depa_list.index(choice_depa))
+        # 工资
+        self.modify_person_salay_entry.SetValue(str(person['Psalary']))
+        # 工种
+        self.modify_person_work_entry.SetValue(person['Pwork'])
+        # 离职
+        self.modify_person_isdissmiss_choice.Clear()
+        self.modify_person_isdissmiss_choice.AppendItems(['是','否'])
+        self.modify_person_isdissmiss_choice.Select(person['Pdismiss'] != '是')
+        
     def confirm_modify_person(self, event):
-        print "confirm_modify"
+        flag = True
+        person = {}
+        row = self.modify_person_grid.GetGridCursorRow()
+        Pid = self.modify_person_grid.GetCellValue(row, 0)
+        person['Pid'] = Pid
+        person['Pname'] = self.modify_person_name_entry.GetValue()
+        person['Psex'] = self.modify_person_sex_choice.GetValue()
+        depa = self.modify_person_depa_choice.GetValue()
+        depa = depa.split("   ")
+        person['Pdepa'] = depa[1]
+        person['Psalary'] = self.modify_person_salay_entry.GetValue()
+        person['Pwork'] = self.modify_person_work_entry.GetValue()
+        person['Pdismiss'] = self.modify_person_isdissmiss_choice.GetValue()
+        for kk in person:
+            if person[kk] == "":
+                flag = False
+                break
+            if kk == 'Psalary':
+                try:                    # 是否可以转换为float型，异常
+                    person[kk] = round(float(person[kk]), 2)
+                except ValueError, e:
+                    wx.MessageBox("工资数值错误",style=wx.OK)
+                    flag = False
+                break
+        if flag == True:
+            update_person(person)
+            wx.MessageBox("修改成功  %s"% person['Pname'],style=wx.OK)
+            self.refresh_grid()
         pass
 
     # 删除人员
     def confirm_del_person(self, event):
         print "confirm_del"
+        row = self.modify_person_grid.GetGridCursorRow()
+        Pid = int(self.modify_person_grid.GetCellValue(row, 0))
+        del_person(Pid)
+        self.refresh_grid()
         pass
     
     # 工资管理视图                        
-    
 
     # 工资管理事件
     
