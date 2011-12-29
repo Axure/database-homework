@@ -113,10 +113,18 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.modify_depa_panel.Hide()
         self.add_person_panel.Hide()
         self.modify_person_panel.Show()
+
+
         person = get_all_person()
-        for kk in person:
-            for ss in kk:
-                print ss,'   ', kk[ss]
+        self.modify_person_grid.AppendRows(len(person)-1)
+        print type(self.modify_person_grid)
+        rows = self.modify_person_grid.GetNumberRows()
+
+        for kk in range(0, rows):
+            self.modify_person_grid.SetCellValue(kk,0, str( person[kk]['Pid'] ))
+            self.modify_person_grid.SetCellValue(kk,1, person[kk]['Pname'])
+            self.modify_person_grid.SetCellValue(kk,2, person[kk]['Psex'])
+            self.modify_person_grid.SetCellValue(kk,3, person[kk]['Dname'])    
         pass
     
     # 管理人员事件

@@ -64,7 +64,7 @@ class login_dialog ( wx.Dialog ):
 class PersonnelManagement_frame ( wx.Frame ):
 	
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"PersonnelManagement", pos = wx.DefaultPosition, size = wx.Size( 640,480 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"PersonnelManagement", pos = wx.DefaultPosition, size = wx.Size( 700,480 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 		
 		self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 		
@@ -253,43 +253,43 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.modify_person_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		gSizer7 = wx.GridSizer( 2, 2, 0, 0 )
 		
-		self.m_scrolledWindow1 = wx.ScrolledWindow( self.modify_person_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL )
-		self.m_scrolledWindow1.SetScrollRate( 0, 5 )
 		bSizer61 = wx.BoxSizer( wx.VERTICAL )
 		
-		self.modify_person_grid = wx.grid.Grid( self.m_scrolledWindow1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.modify_person_grid = wx.grid.Grid( self.modify_person_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		
 		# Grid
-		self.modify_person_grid.CreateGrid( 0, 3 )
+		self.modify_person_grid.CreateGrid( 1, 4 )
 		self.modify_person_grid.EnableEditing( False )
 		self.modify_person_grid.EnableGridLines( True )
 		self.modify_person_grid.EnableDragGridSize( False )
 		self.modify_person_grid.SetMargins( 0, 0 )
 		
 		# Columns
+		self.modify_person_grid.SetColSize( 0, 80 )
+		self.modify_person_grid.SetColSize( 1, 80 )
+		self.modify_person_grid.SetColSize( 2, 80 )
+		self.modify_person_grid.SetColSize( 3, 69 )
 		self.modify_person_grid.EnableDragColMove( False )
 		self.modify_person_grid.EnableDragColSize( True )
 		self.modify_person_grid.SetColLabelSize( 30 )
-		self.modify_person_grid.SetColLabelValue( 0, u"姓名" )
-		self.modify_person_grid.SetColLabelValue( 1, u"性别" )
-		self.modify_person_grid.SetColLabelValue( 2, u"所属部门" )
+		self.modify_person_grid.SetColLabelValue( 0, u"编号" )
+		self.modify_person_grid.SetColLabelValue( 1, u"姓名" )
+		self.modify_person_grid.SetColLabelValue( 2, u"性别" )
+		self.modify_person_grid.SetColLabelValue( 3, u"所属部门" )
 		self.modify_person_grid.SetColLabelAlignment( wx.ALIGN_CENTRE, wx.ALIGN_CENTRE )
 		
 		# Rows
 		self.modify_person_grid.EnableDragRowSize( False )
-		self.modify_person_grid.SetRowLabelSize( 45 )
+		self.modify_person_grid.SetRowLabelSize( 20 )
 		self.modify_person_grid.SetRowLabelAlignment( wx.ALIGN_CENTRE, wx.ALIGN_CENTRE )
 		
 		# Label Appearance
 		
 		# Cell Defaults
 		self.modify_person_grid.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
-		bSizer61.Add( self.modify_person_grid, 0, wx.ALL|wx.EXPAND, 5 )
+		bSizer61.Add( self.modify_person_grid, 1, wx.ALL|wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
-		self.m_scrolledWindow1.SetSizer( bSizer61 )
-		self.m_scrolledWindow1.Layout()
-		bSizer61.Fit( self.m_scrolledWindow1 )
-		gSizer7.Add( self.m_scrolledWindow1, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		gSizer7.Add( bSizer61, 1, wx.EXPAND, 5 )
 		
 		gSizer511 = wx.GridSizer( 0, 1, 0, 0 )
 		
