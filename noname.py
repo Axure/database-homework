@@ -360,7 +360,56 @@ class PersonnelManagement_frame ( wx.Frame ):
 		bSizer6.Add( self.modify_person_panel, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.mana_tax_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		self.mana_tax_panel.Hide()
+		
+		gSizer10 = wx.GridSizer( 0, 2, 0, 0 )
+		
+		tax_listChoices = []
+		self.tax_list = wx.ListBox( self.mana_tax_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, tax_listChoices, wx.LB_NEEDED_SB )
+		gSizer10.Add( self.tax_list, 1, wx.ALL|wx.EXPAND, 5 )
+		
+		gSizer101 = wx.GridSizer( 0, 3, 0, 0 )
+		
+		self.m_staticText201 = wx.StaticText( self.mana_tax_panel, wx.ID_ANY, u"名称", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText201.Wrap( -1 )
+		gSizer101.Add( self.m_staticText201, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.tax_name = wx.TextCtrl( self.mana_tax_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer101.Add( self.tax_name, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.m_staticText211 = wx.StaticText( self.mana_tax_panel, wx.ID_ANY, u"　　　", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText211.Wrap( -1 )
+		gSizer101.Add( self.m_staticText211, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.m_staticText20 = wx.StaticText( self.mana_tax_panel, wx.ID_ANY, u"税率", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText20.Wrap( -1 )
+		gSizer101.Add( self.m_staticText20, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		
+		self.tax_rate = wx.TextCtrl( self.mana_tax_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer101.Add( self.tax_rate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.m_staticText21 = wx.StaticText( self.mana_tax_panel, wx.ID_ANY, u"%", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText21.Wrap( -1 )
+		gSizer101.Add( self.m_staticText21, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+		
+		self.add_tax_button = wx.Button( self.mana_tax_panel, wx.ID_ANY, u"增加", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer101.Add( self.add_tax_button, 0, wx.ALL, 5 )
+		
+		self.del_tax_button = wx.Button( self.mana_tax_panel, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer101.Add( self.del_tax_button, 0, wx.ALL, 5 )
+		
+		self.modify_tax_button = wx.Button( self.mana_tax_panel, wx.ID_ANY, u"修改", wx.DefaultPosition, wx.DefaultSize, 0 )
+		gSizer101.Add( self.modify_tax_button, 0, wx.ALL, 5 )
+		
+		gSizer10.Add( gSizer101, 1, wx.EXPAND, 5 )
+		
+		self.mana_tax_panel.SetSizer( gSizer10 )
+		self.mana_tax_panel.Layout()
+		gSizer10.Fit( self.mana_tax_panel )
 		bSizer6.Add( self.mana_tax_panel, 1, wx.EXPAND |wx.ALL, 5 )
+		
+		self.account_salary_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+		bSizer6.Add( self.account_salary_panel, 1, wx.EXPAND |wx.ALL, 5 )
 		
 		self.SetSizer( bSizer6 )
 		self.Layout()
@@ -370,6 +419,7 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.Bind( wx.EVT_MENU, self.open_modify_depa, id = self.modify_depa_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.open_add_person, id = self.add_person_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.open_modify_person, id = self.modify_person_item.GetId() )
+		self.Bind( wx.EVT_MENU, self.open_mana_tax, id = self.mana_tax_item.GetId() )
 		self.Bind( wx.EVT_MENU, self.onExit, id = self.exit_item.GetId() )
 		self.submit_button.Bind( wx.EVT_BUTTON, self.confirm_add_depa )
 		self.cancel_button.Bind( wx.EVT_BUTTON, self.cancel_add_depa )
@@ -383,6 +433,10 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.modify_person_grid.Bind( wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.get_select_person )
 		self.confirm_modify_person_button.Bind( wx.EVT_BUTTON, self.confirm_modify_person )
 		self.confirm_del_person_button.Bind( wx.EVT_BUTTON, self.confirm_del_person )
+		self.tax_list.Bind( wx.EVT_LISTBOX_DCLICK, self.select_tax_item )
+		self.add_tax_button.Bind( wx.EVT_BUTTON, self.confirm_add_tax )
+		self.del_tax_button.Bind( wx.EVT_BUTTON, self.confirm_del_tax )
+		self.modify_tax_button.Bind( wx.EVT_BUTTON, self.confirm_modify_tax )
 	
 	def __del__( self ):
 		pass
@@ -399,6 +453,9 @@ class PersonnelManagement_frame ( wx.Frame ):
 		event.Skip()
 	
 	def open_modify_person( self, event ):
+		event.Skip()
+	
+	def open_mana_tax( self, event ):
 		event.Skip()
 	
 	def onExit( self, event ):
@@ -440,19 +497,17 @@ class PersonnelManagement_frame ( wx.Frame ):
 	def confirm_del_person( self, event ):
 		event.Skip()
 	
-
-###########################################################################
-## Class account_salary_panel
-###########################################################################
-
-class account_salary_panel ( wx.Panel ):
+	def select_tax_item( self, event ):
+		event.Skip()
 	
-	def __init__( self, parent ):
-		wx.Panel.__init__ ( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 500,300 ), style = wx.TAB_TRAVERSAL )
-		
+	def confirm_add_tax( self, event ):
+		event.Skip()
 	
-	def __del__( self ):
-		pass
+	def confirm_del_tax( self, event ):
+		event.Skip()
+	
+	def confirm_modify_tax( self, event ):
+		event.Skip()
 	
 
 ###########################################################################

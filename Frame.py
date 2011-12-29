@@ -24,7 +24,8 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.MDid = None
         self.PDid = None
         self.persons = None
-
+        self.tax = None
+        
     # 管理部门视图
     def open_add_depa(self, event):
         self.welcome_panel.Hide()
@@ -32,6 +33,7 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.modify_depa_panel.Hide()
         self.add_person_panel.Hide()
         self.modify_person_panel.Hide()
+        self.mana_tax_panel.Hide()
         
     def open_modify_depa(self, event):
         self.welcome_panel.Hide()
@@ -39,6 +41,8 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.modify_depa_panel.Show()
         self.add_person_panel.Hide()
         self.modify_person_panel.Hide()
+        self.mana_tax_panel.Hide()
+        
         depa = get_all_depa()
         self.list_depa.Clear()
         for kk in depa:
@@ -101,6 +105,8 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.modify_depa_panel.Hide()
         self.add_person_panel.Show()
         self.modify_person_panel.Hide()
+        self.mana_tax_panel.Hide()
+
         depa = get_all_depa()
         self.select_depa_add_person.Clear()
         for kk in depa:
@@ -114,6 +120,7 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.modify_depa_panel.Hide()
         self.add_person_panel.Hide()
         self.modify_person_panel.Show()
+        self.mana_tax_panel.Hide()
         self.refresh_grid()
         
     def refresh_grid(self):
@@ -252,9 +259,33 @@ class PM_frame(noname.PersonnelManagement_frame):
         pass
     
     # 工资管理视图                        
+    def open_mana_tax(self, event):
+        self.add_depa_panel.Hide()
+        self.modify_depa_panel.Hide()
+        self.add_person_panel.Hide()
+        self.modify_person_panel.Hide()
+        self.mana_tax_panel.Show()
+        self.account_salary_panel.Hide()
+        
+    def oepn_account_salary(self, event):
+        self.add_depa_panel.Hide()
+        self.modify_depa_panel.Hide()
+        self.add_person_panel.Hide()
+        self.modify_person_panel.Hide()
+        self.mana_tax_panel.Hide()
+        self.account_salary_panel.Show()
 
     # 工资管理事件
-    
-    # 系统设置
+    def confirm_add_tax(self, event):
+        
+        pass
+    def confirm_modify_tax(self, event):
+        pass
+    def confirm_del_tax(self, event):
+        pass
+    def select_tax_item(self, event):
+        pass
+
+    # 系统
     def onExit(self, event):
         self.Close()

@@ -136,17 +136,10 @@ def update_person(person):
     conn.commit()
     cursor.close()
     conn.close()
-
-def get_ppperson():
+# 管理税务
+def add_tax(Tax):
     pass
-def search_person():
+def update_tax(tax):
     pass
-
-def add_tax():
-    pass
-def add_bonus():
-    pass
-def add_fine():
-    pass
-def account_salary():
+def del_tax(Tid):
     pass
