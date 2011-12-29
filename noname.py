@@ -8,6 +8,7 @@
 ###########################################################################
 
 import wx
+import wx.grid
 
 ###########################################################################
 ## Class login_dialog
@@ -87,9 +88,6 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.menu.Append( self.mana_personnel_menu, u"人事管理" ) 
 		
 		self.mana_salary_menu = wx.Menu()
-		self.mana_fine_item = wx.MenuItem( self.mana_salary_menu, wx.ID_ANY, u"设置应扣", wx.EmptyString, wx.ITEM_NORMAL )
-		self.mana_salary_menu.AppendItem( self.mana_fine_item )
-		
 		self.mana_tax_item = wx.MenuItem( self.mana_salary_menu, wx.ID_ANY, u"设置税项", wx.EmptyString, wx.ITEM_NORMAL )
 		self.mana_salary_menu.AppendItem( self.mana_tax_item )
 		
@@ -253,10 +251,45 @@ class PersonnelManagement_frame ( wx.Frame ):
 		bSizer6.Add( self.add_person_panel, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.modify_person_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-		gSizer7 = wx.GridSizer( 0, 2, 0, 0 )
+		gSizer7 = wx.GridSizer( 2, 2, 0, 0 )
 		
-		self.depa_tree = wx.TreeCtrl( self.modify_person_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TR_DEFAULT_STYLE )
-		gSizer7.Add( self.depa_tree, 0, wx.ALL|wx.EXPAND, 5 )
+		self.m_scrolledWindow1 = wx.ScrolledWindow( self.modify_person_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL )
+		self.m_scrolledWindow1.SetScrollRate( 0, 5 )
+		bSizer61 = wx.BoxSizer( wx.VERTICAL )
+		
+		self.modify_person_grid = wx.grid.Grid( self.m_scrolledWindow1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		
+		# Grid
+		self.modify_person_grid.CreateGrid( 0, 3 )
+		self.modify_person_grid.EnableEditing( False )
+		self.modify_person_grid.EnableGridLines( True )
+		self.modify_person_grid.EnableDragGridSize( False )
+		self.modify_person_grid.SetMargins( 0, 0 )
+		
+		# Columns
+		self.modify_person_grid.EnableDragColMove( False )
+		self.modify_person_grid.EnableDragColSize( True )
+		self.modify_person_grid.SetColLabelSize( 30 )
+		self.modify_person_grid.SetColLabelValue( 0, u"姓名" )
+		self.modify_person_grid.SetColLabelValue( 1, u"性别" )
+		self.modify_person_grid.SetColLabelValue( 2, u"所属部门" )
+		self.modify_person_grid.SetColLabelAlignment( wx.ALIGN_CENTRE, wx.ALIGN_CENTRE )
+		
+		# Rows
+		self.modify_person_grid.EnableDragRowSize( False )
+		self.modify_person_grid.SetRowLabelSize( 45 )
+		self.modify_person_grid.SetRowLabelAlignment( wx.ALIGN_CENTRE, wx.ALIGN_CENTRE )
+		
+		# Label Appearance
+		
+		# Cell Defaults
+		self.modify_person_grid.SetDefaultCellAlignment( wx.ALIGN_LEFT, wx.ALIGN_TOP )
+		bSizer61.Add( self.modify_person_grid, 0, wx.ALL|wx.EXPAND, 5 )
+		
+		self.m_scrolledWindow1.SetSizer( bSizer61 )
+		self.m_scrolledWindow1.Layout()
+		bSizer61.Fit( self.m_scrolledWindow1 )
+		gSizer7.Add( self.m_scrolledWindow1, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
 		gSizer511 = wx.GridSizer( 0, 1, 0, 0 )
 		
@@ -275,45 +308,45 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.m_staticText81.Wrap( -1 )
 		fgSizer21.Add( self.m_staticText81, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		m_comboBox3Choices = []
-		self.m_comboBox3 = wx.ComboBox( self.modify_person_panel, wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, m_comboBox3Choices, 0 )
-		fgSizer21.Add( self.m_comboBox3, 0, wx.ALL, 5 )
+		modify_person_sex_choiceChoices = []
+		self.modify_person_sex_choice = wx.ComboBox( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, modify_person_sex_choiceChoices, wx.CB_READONLY )
+		fgSizer21.Add( self.modify_person_sex_choice, 0, wx.ALL, 5 )
 		
 		self.m_staticText121 = wx.StaticText( self.modify_person_panel, wx.ID_ANY, u"所属部门", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText121.Wrap( -1 )
 		fgSizer21.Add( self.m_staticText121, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		m_comboBox5Choices = []
-		self.m_comboBox5 = wx.ComboBox( self.modify_person_panel, wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, m_comboBox5Choices, 0 )
-		fgSizer21.Add( self.m_comboBox5, 0, wx.ALL, 5 )
+		modify_person_depa_choiceChoices = []
+		self.modify_person_depa_choice = wx.ComboBox( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, modify_person_depa_choiceChoices, wx.CB_READONLY )
+		fgSizer21.Add( self.modify_person_depa_choice, 0, wx.ALL, 5 )
 		
 		self.m_staticText131 = wx.StaticText( self.modify_person_panel, wx.ID_ANY, u"基本工资", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText131.Wrap( -1 )
 		fgSizer21.Add( self.m_staticText131, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.m_textCtrl121 = wx.TextCtrl( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer21.Add( self.m_textCtrl121, 0, wx.ALL, 5 )
+		self.modify_person_salay_entry = wx.TextCtrl( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer21.Add( self.modify_person_salay_entry, 0, wx.ALL, 5 )
 		
 		self.m_staticText141 = wx.StaticText( self.modify_person_panel, wx.ID_ANY, u"工种", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText141.Wrap( -1 )
-		fgSizer21.Add( self.m_staticText141, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5 )
+		fgSizer21.Add( self.m_staticText141, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		self.m_textCtrl131 = wx.TextCtrl( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer21.Add( self.m_textCtrl131, 0, wx.ALL, 5 )
+		self.modify_person_work_entry = wx.TextCtrl( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer21.Add( self.modify_person_work_entry, 0, wx.ALL, 5 )
 		
 		self.m_staticText151 = wx.StaticText( self.modify_person_panel, wx.ID_ANY, u"是否离职", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText151.Wrap( -1 )
 		fgSizer21.Add( self.m_staticText151, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL, 5 )
 		
-		m_comboBox4Choices = []
-		self.m_comboBox4 = wx.ComboBox( self.modify_person_panel, wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, m_comboBox4Choices, 0 )
-		fgSizer21.Add( self.m_comboBox4, 0, wx.ALL, 5 )
+		modify_person_isdissmiss_choiceChoices = []
+		self.modify_person_isdissmiss_choice = wx.ComboBox( self.modify_person_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, modify_person_isdissmiss_choiceChoices, 0 )
+		fgSizer21.Add( self.modify_person_isdissmiss_choice, 0, wx.ALL, 5 )
 		
-		self.m_button141 = wx.Button( self.modify_person_panel, wx.ID_ANY, u"修改", wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer21.Add( self.m_button141, 0, wx.ALL, 5 )
+		self.confirm_modify_person_button = wx.Button( self.modify_person_panel, wx.ID_ANY, u"修改", wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer21.Add( self.confirm_modify_person_button, 0, wx.ALL, 5 )
 		
-		self.m_button151 = wx.Button( self.modify_person_panel, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
-		fgSizer21.Add( self.m_button151, 0, wx.ALL, 5 )
+		self.confirm_del_person_button = wx.Button( self.modify_person_panel, wx.ID_ANY, u"删除", wx.DefaultPosition, wx.DefaultSize, 0 )
+		fgSizer21.Add( self.confirm_del_person_button, 0, wx.ALL, 5 )
 		
 		gSizer511.Add( fgSizer21, 1, wx.EXPAND|wx.ALIGN_CENTER_HORIZONTAL, 5 )
 		
@@ -322,7 +355,7 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.modify_person_panel.SetSizer( gSizer7 )
 		self.modify_person_panel.Layout()
 		gSizer7.Fit( self.modify_person_panel )
-		bSizer6.Add( self.modify_person_panel, 1, wx.EXPAND |wx.ALL, 5 )
+		bSizer6.Add( self.modify_person_panel, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL|wx.EXPAND, 5 )
 		
 		self.SetSizer( bSizer6 )
 		self.Layout()
@@ -342,6 +375,8 @@ class PersonnelManagement_frame ( wx.Frame ):
 		self.select_depa_add_person.Bind( wx.EVT_LISTBOX_DCLICK, self.select_person_depa )
 		self.confirm_add_person_button.Bind( wx.EVT_BUTTON, self.confirm_add_person )
 		self.cancel_add_person_button.Bind( wx.EVT_BUTTON, self.cancel_add_person )
+		self.confirm_modify_person_button.Bind( wx.EVT_BUTTON, self.confirm_modify_person )
+		self.confirm_del_person_button.Bind( wx.EVT_BUTTON, self.confirm_del_person )
 	
 	def __del__( self ):
 		pass
@@ -388,6 +423,12 @@ class PersonnelManagement_frame ( wx.Frame ):
 		event.Skip()
 	
 	def cancel_add_person( self, event ):
+		event.Skip()
+	
+	def confirm_modify_person( self, event ):
+		event.Skip()
+	
+	def confirm_del_person( self, event ):
 		event.Skip()
 	
 

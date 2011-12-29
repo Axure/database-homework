@@ -20,18 +20,24 @@ class login_dialog(noname.login_dialog):
             return False
     
 class PM_frame(noname.PersonnelManagement_frame):
+    def OnInit(self):
+        self.MDid = None
+        self.PDid = None
+        
     # 管理部门视图
     def open_add_depa(self, event):
         self.welcome_panel.Hide()
         self.add_depa_panel.Show()
         self.modify_depa_panel.Hide()
         self.add_person_panel.Hide()
+        self.modify_person_panel.Hide()
         
     def open_modify_depa(self, event):
         self.welcome_panel.Hide()
         self.add_depa_panel.Hide()
         self.modify_depa_panel.Show()
-        self.add_person_panel.Hide()        
+        self.add_person_panel.Hide()
+        self.modify_person_panel.Hide()
         depa = get_all_depa()
         self.list_depa.Clear()
         for kk in depa:
@@ -47,32 +53,34 @@ class PM_frame(noname.PersonnelManagement_frame):
         wx.MessageBox("插入成功",style=wx.OK)
 
     def select_depa(self,event):
-        global MDid
         data = self.list_depa.GetStringSelection()
         data = data.split(u'   ')
-        MDid=data[1]
+        self.MDid=data[1]
         MDname=data[0]
         self.depa_name_entry.SetValue(MDname)
         print self.list_depa.GetStringSelection()
 
     def confirm_modify_depa(self, event):
         MDname = self.depa_name_entry.GetValue()
-        if MDid == None:
+        if self.MDid == None:
             wx.MessageBox("不能修改",style=wx.OK)
         else:
-            update_depa(MDid, MDname)
+            update_depa(self.MDid, MDname)
             depa = get_all_depa()
             self.list_depa.Clear()
             for kk in depa:
                 self.list_depa.Append(depa[kk]+u'   '+str(kk))
                 print depa[kk]+"    "+str(kk)
             self.list_depa.Refresh()
+            self.Mself.Did = None
+            self.depa_name_entry.SetValue("")
+
 
     def confirm_del_depa(self, event):
-        if MDid == None:
+        if self.Mself.Did == None:
             wx.MessageBox("不能删除",style=wx.OK)
         else:
-            del_depa(MDid)
+            del_depa(self.Mself.Did)
             depa = get_all_depa()
             self.list_depa.Clear()
             for kk in depa:
@@ -82,7 +90,7 @@ class PM_frame(noname.PersonnelManagement_frame):
 
         
     def canel_modify_dpea(self, event):
-        MDid = None
+        self.Mself.Did = None
         self.depa_name_entry.SetValue("")
 
     #管理人员视图
@@ -91,6 +99,7 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.add_depa_panel.Hide()
         self.modify_depa_panel.Hide()
         self.add_person_panel.Show()
+        self.modify_person_panel.Hide()
         depa = get_all_depa()
         self.select_depa_add_person.Clear()
         for kk in depa:
@@ -99,17 +108,25 @@ class PM_frame(noname.PersonnelManagement_frame):
         self.select_depa_add_person.Refresh()
     
     def open_modify_person(self, event):
+        self.welcome_panel.Hide()
+        self.add_depa_panel.Hide()
+        self.modify_depa_panel.Hide()
+        self.add_person_panel.Hide()
+        self.modify_person_panel.Show()
+        person = get_all_person()
+        for kk in person:
+            for ss in kk:
+                print ss,'   ', kk[ss]
         pass
     
     # 管理人员事件
     # 添加人员
     def select_person_depa(self, event):
-        global Did
         data = self.select_depa_add_person.GetStringSelection()
         data = data.split("   ")
         self.person_depa_entry.SetValue(data[0])
-        Did = data[1]
-        print data
+        self.Did = int(data[1])
+        print self.Did
 
     def confirm_add_person(self, event):
         person = {}
@@ -120,6 +137,7 @@ class PM_frame(noname.PersonnelManagement_frame):
         person['salary'] = self.person_salary_entry.GetValue()
         person['work'] = self.person_work_entry.GetValue()
         person['dismiss'] = self.isDismiss_choice.GetValue()
+        person['depa'] = self.Did
         for ss in person:
             if ss == 'salary':
                 try:                    # 是否可以转换为float型，异常
@@ -141,6 +159,7 @@ class PM_frame(noname.PersonnelManagement_frame):
             self.person_salary_entry.SetValue("")
             self.person_work_entry.SetValue("")
             self.isDismiss_choice.SetValue("")
+            self.Did = ""
 
     def cancel_add_person(self, event):
         self.person_name_entry.SetValue("")
@@ -152,16 +171,20 @@ class PM_frame(noname.PersonnelManagement_frame):
 
 
     # 修改人员
+    def confirm_modify_person(self, event):
+        print "confirm_modify"
+        pass
+
+    # 删除人员
+    def confirm_del_person(self, event):
+        print "confirm_del"
+        pass
     
-
-
     # 工资管理视图                        
-
+    
 
     # 工资管理事件
     
-
-
     # 系统设置
     def onExit(self, event):
         self.Close()
