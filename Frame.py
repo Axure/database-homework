@@ -17,5 +17,4 @@ class login_dialog(noname.login_dialog):
             return False
     
 class PM_frame(noname.PersonnelManagement_frame):
-    
         
