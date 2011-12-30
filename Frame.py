@@ -20,8 +20,7 @@ class login_dialog(noname.login_dialog):
             return False
     
 class PM_frame(noname.PersonnelManagement_frame):
-<<<<<<< HEAD
-=======
+
     def OnInit(self):
         self.MDid = None
         self.PDid = None
@@ -282,7 +281,6 @@ class PM_frame(noname.PersonnelManagement_frame):
             print str(kk[0]), kk[1], str(kk[2])
         self.mana_tax_list.Refresh()
 
->>>>>>> mana_tax
         
     def oepn_account_salary(self, event):
         self.welcome_panel.Hide()
