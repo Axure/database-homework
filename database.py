@@ -20,9 +20,6 @@ def get_conn():
         print e;
         sys.exit()
 
-def modify_passwd():
-    pass
-
 #验证管理员
 def check_user(name, passwd):
     get_conn()
@@ -137,9 +134,44 @@ def update_person(person):
     cursor.close()
     conn.close()
 # 管理税务
+def get_all_tax():
+    get_conn()
+    cursor = conn.cursor()
+    sql = "select * from Tax"
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return list(data)
+    pass
+
 def add_tax(Tax):
-    pass
+    get_conn()
+    cursor = conn.cursor()
+    sql = "insert into Tax(Tname, Trate) values ('%s', '%s')" % (Tax['Tname'], Tax['Trate'])
+    print sql 
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close();
+
 def update_tax(tax):
-    pass
+    get_conn()
+    cursor = conn.cursor()
+    sql = "update Tax set Tname= '%s', Trate = '%s' where Tid='%s'"%(tax['Tname'], tax['Trate'], tax['Tid'])
+    print sql 
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 def del_tax(Tid):
-    pass
+    get_conn()
+    cursor = conn.cursor()
+    sql = "delete from Tax where Tid = '%s';" % Tid
+    print sql 
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+

@@ -941,7 +941,7 @@
                         <property name="permission">none</property>
                         <property name="shortcut"></property>
                         <property name="unchecked_bitmap"></property>
-                        <event name="OnMenuSelection"></event>
+                        <event name="OnMenuSelection">oepn_account_salary</event>
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
@@ -998,7 +998,7 @@
                         <property name="floatable">1</property>
                         <property name="font"></property>
                         <property name="gripper">0</property>
-                        <property name="hidden">1</property>
+                        <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
                         <property name="layer"></property>
                         <property name="max_size"></property>
@@ -5197,11 +5197,11 @@
                         </object>
                     </object>
                 </object>
-                <object class="sizeritem" expanded="1">
+                <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND | wxALL</property>
                     <property name="proportion">1</property>
-                    <object class="wxPanel" expanded="1">
+                    <object class="wxPanel" expanded="0">
                         <property name="BottomDockable">1</property>
                         <property name="LeftDockable">1</property>
                         <property name="RightDockable">1</property>
@@ -5224,7 +5224,7 @@
                         <property name="floatable">1</property>
                         <property name="font"></property>
                         <property name="gripper">0</property>
-                        <property name="hidden">0</property>
+                        <property name="hidden">1</property>
                         <property name="id">wxID_ANY</property>
                         <property name="layer"></property>
                         <property name="max_size"></property>
@@ -5325,7 +5325,7 @@
                                     <property name="minimize_button">0</property>
                                     <property name="minimum_size"></property>
                                     <property name="moveable">1</property>
-                                    <property name="name">tax_list</property>
+                                    <property name="name">mana_tax_list</property>
                                     <property name="pane_border">1</property>
                                     <property name="pane_position"></property>
                                     <property name="pane_size"></property>
@@ -5512,7 +5512,7 @@
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size"></property>
                                             <property name="moveable">1</property>
-                                            <property name="name">tax_name</property>
+                                            <property name="name">mana_tax_name_entry</property>
                                             <property name="pane_border">1</property>
                                             <property name="pane_position"></property>
                                             <property name="pane_size"></property>
@@ -5777,7 +5777,7 @@
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size"></property>
                                             <property name="moveable">1</property>
-                                            <property name="name">tax_rate</property>
+                                            <property name="name">mana_tax_rate_entry</property>
                                             <property name="pane_border">1</property>
                                             <property name="pane_position"></property>
                                             <property name="pane_size"></property>
@@ -6275,7 +6275,7 @@
                             <property name="name">gSizer71</property>
                             <property name="permission">none</property>
                             <property name="rows">2</property>
-                            <property name="vgap">0</property>
+                            <property name="vgap">20</property>
                             <object class="sizeritem" expanded="0">
                                 <property name="border">5</property>
                                 <property name="flag">wxEXPAND</property>
@@ -6380,7 +6380,7 @@
                                             <event name="OnEraseBackground"></event>
                                             <event name="OnGridCellChange"></event>
                                             <event name="OnGridCellLeftClick"></event>
-                                            <event name="OnGridCellLeftDClick">get_select_person</event>
+                                            <event name="OnGridCellLeftDClick">account_select_person</event>
                                             <event name="OnGridCellRightClick"></event>
                                             <event name="OnGridCellRightDClick"></event>
                                             <event name="OnGridCmdCellChange"></event>
@@ -6587,7 +6587,7 @@
                                                     <property name="minimize_button">0</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="moveable">1</property>
-                                                    <property name="name">tax_name</property>
+                                                    <property name="name">tax_name_entry </property>
                                                     <property name="pane_border">1</property>
                                                     <property name="pane_position"></property>
                                                     <property name="pane_size"></property>
@@ -6765,7 +6765,7 @@
                                                     <property name="minimize_button">0</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="moveable">1</property>
-                                                    <property name="name">tax_sex</property>
+                                                    <property name="name">tax_sex_entry</property>
                                                     <property name="pane_border">1</property>
                                                     <property name="pane_position"></property>
                                                     <property name="pane_size"></property>
@@ -6943,7 +6943,7 @@
                                                     <property name="minimize_button">0</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="moveable">1</property>
-                                                    <property name="name">tax_depa</property>
+                                                    <property name="name">tax_depa_entry</property>
                                                     <property name="pane_border">1</property>
                                                     <property name="pane_position"></property>
                                                     <property name="pane_size"></property>
@@ -7121,7 +7121,7 @@
                                                     <property name="minimize_button">0</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="moveable">1</property>
-                                                    <property name="name">tax_salary</property>
+                                                    <property name="name">tax_salary_entry</property>
                                                     <property name="pane_border">1</property>
                                                     <property name="pane_position"></property>
                                                     <property name="pane_size"></property>
@@ -7299,7 +7299,7 @@
                                                     <property name="minimize_button">0</property>
                                                     <property name="minimum_size"></property>
                                                     <property name="moveable">1</property>
-                                                    <property name="name">tax_work</property>
+                                                    <property name="name">tax_work_entry</property>
                                                     <property name="pane_border">1</property>
                                                     <property name="pane_position"></property>
                                                     <property name="pane_size"></property>
@@ -7712,7 +7712,7 @@
                             </object>
                             <object class="sizeritem" expanded="0">
                                 <property name="border">5</property>
-                                <property name="flag">wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL</property>
+                                <property name="flag">wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_BOTTOM</property>
                                 <property name="proportion">0</property>
                                 <object class="wxStaticText" expanded="0">
                                     <property name="BottomDockable">1</property>
@@ -7739,7 +7739,7 @@
                                     <property name="gripper">0</property>
                                     <property name="hidden">0</property>
                                     <property name="id">wxID_ANY</property>
-                                    <property name="label"></property>
+                                    <property name="label">d</property>
                                     <property name="layer"></property>
                                     <property name="max_size"></property>
                                     <property name="maximize_button">0</property>
@@ -7754,7 +7754,7 @@
                                     <property name="pane_size"></property>
                                     <property name="permission">protected</property>
                                     <property name="pin_button">1</property>
-                                    <property name="pos"></property>
+                                    <property name="pos">-1,-1</property>
                                     <property name="position"></property>
                                     <property name="resize">Resizable</property>
                                     <property name="row"></property>
