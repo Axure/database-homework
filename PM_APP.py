@@ -2,6 +2,8 @@
 
 import wx, sys
 from Frame import *
+reload(sys) 
+sys.setdefaultencoding('utf8')
 
 #PM_App wx.App
 class PM_App(wx.App):
@@ -24,9 +26,9 @@ if __name__ == '__main__':
             login.Destroy()
             app.Destroy()
             sys.exit()
-
     if x == True:
         app.PM_Frame.Show()
     else:
         sys.exit()
     app.MainLoop()
+
